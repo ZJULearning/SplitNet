@@ -1,0 +1,13 @@
+net: "./train_test.prototxt"
+test_iter: 400
+test_interval: 5000
+base_lr: 1e-2
+momentum: 0.9
+weight_decay: 0.0005
+lr_policy: "linear"
+dst_lr: 1e-5
+display: 100
+max_iter: 500000
+snapshot: 10000
+snapshot_prefix: "./save/basic"
+solver_mode: GPU
