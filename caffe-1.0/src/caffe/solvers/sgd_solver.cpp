@@ -56,6 +56,14 @@ Dtype SGDSolver<Dtype>::GetLearningRate() {
     rate = this->param_.base_lr() * (Dtype(1.) /
         (Dtype(1.) + exp(-this->param_.gamma() * (Dtype(this->iter_) -
           Dtype(this->param_.stepsize())))));
+  } else if (lr_policy == "linear") {
+    Dtype dst_iter = this->param_.max_iter();
+    if (this->param_.has_dst_iter())
+      dst_iter = this->param_.dst_iter();
+    if (this->iter_ < dst_iter)
+      rate = this->param_.base_lr() + (this->param_.dst_lr() - this->param_.base_lr() ) * Dtype(this->iter_) / dst_iter;
+    else
+      rate = this->param_.dst_lr();
   } else {
     LOG(FATAL) << "Unknown learning rate policy: " << lr_policy;
   }
