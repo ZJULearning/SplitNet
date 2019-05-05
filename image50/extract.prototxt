@@ -1,5 +1,4 @@
 name: "image50"
-
 layer {
   name: "data"
   type: "Data"
@@ -11,20 +10,19 @@ layer {
   }
   data_param {
     source: "/path/to/your/evaluationlmdb"
-    backend: LMDB
     batch_size: 20
+    backend: LMDB
   }
 }
-
 layer {
-  name: "crop"
-  type: "Crop"
+  name: "cornercrop"
+  type: "CornerCrop"
   bottom: "data"
   top: "upperleft"
   top: "upperright"
   top: "lowerleft"
   top: "lowerright"
-  crop_param {
+  corner_crop_param {
     crop_size: 50
     position: "upperleft"
     position: "upperright"
@@ -32,7 +30,6 @@ layer {
     position: "lowerright"
   }
 }
-
 layer {
   name: "concat"
   type: "Concat"
@@ -45,7 +42,6 @@ layer {
     axis: 1
   }
 }
-
 layer {
   name: "conv11"
   type: "Convolution"
@@ -60,11 +56,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 128 #32
-    kernel_size: 3
-    stride: 1
+    num_output: 128
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -74,19 +70,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu11"
-  type:"ELU"
-  bottom:"conv11"
-  top:"conv11"
+layer {
+  name: "relu11"
+  type: "ELU"
+  bottom: "conv11"
+  top: "conv11"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu11_a"
 }
-
 layer {
   name: "conv12"
   type: "Convolution"
@@ -101,11 +93,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 256 #64
-    kernel_size: 3
-    stride: 1
+    num_output: 256
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -115,19 +107,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu12"
-  type:"ELU"
-  bottom:"conv12"
-  top:"conv12"
+layer {
+  name: "relu12"
+  type: "ELU"
+  bottom: "conv12"
+  top: "conv12"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu12_a"
 }
-
 layer {
   name: "pool1"
   type: "Pooling"
@@ -139,7 +127,6 @@ layer {
     stride: 2
   }
 }
-
 layer {
   name: "conv21"
   type: "Convolution"
@@ -154,11 +141,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 256 #64
-    kernel_size: 3
-    stride: 1
+    num_output: 256
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -168,19 +155,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu21"
-  type:"ELU"
-  bottom:"conv21"
-  top:"conv21"
+layer {
+  name: "relu21"
+  type: "ELU"
+  bottom: "conv21"
+  top: "conv21"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu21_a"
 }
-
 layer {
   name: "conv22"
   type: "Convolution"
@@ -195,11 +178,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 512 #128
-    kernel_size: 3
-    stride: 1
+    num_output: 512
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -209,19 +192,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu22"
-  type:"ELU"
-  bottom:"conv22"
-  top:"conv22"
+layer {
+  name: "relu22"
+  type: "ELU"
+  bottom: "conv22"
+  top: "conv22"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu22_a"
 }
-
 layer {
   name: "pool2"
   type: "Pooling"
@@ -233,7 +212,6 @@ layer {
     stride: 2
   }
 }
-
 layer {
   name: "conv31"
   type: "Convolution"
@@ -248,11 +226,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 384 #96
-    kernel_size: 3
-    stride: 1
+    num_output: 384
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -262,19 +240,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu31"
-  type:"ELU"
-  bottom:"conv31"
-  top:"conv31"
+layer {
+  name: "relu31"
+  type: "ELU"
+  bottom: "conv31"
+  top: "conv31"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu31_a"
 }
-
 layer {
   name: "conv32"
   type: "Convolution"
@@ -289,11 +263,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 768 #192
-    kernel_size: 3
-    stride: 1
+    num_output: 768
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -303,19 +277,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu32"
-  type:"ELU"
-  bottom:"conv32"
-  top:"conv32"
+layer {
+  name: "relu32"
+  type: "ELU"
+  bottom: "conv32"
+  top: "conv32"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu32_a"
 }
-
 layer {
   name: "pool3"
   type: "Pooling"
@@ -327,7 +297,6 @@ layer {
     stride: 2
   }
 }
-
 layer {
   name: "conv41"
   type: "Convolution"
@@ -342,11 +311,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 512 #128
-    kernel_size: 3
-    stride: 1
+    num_output: 512
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -356,19 +325,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu41"
-  type:"ELU"
-  bottom:"conv41"
-  top:"conv41"
+layer {
+  name: "relu41"
+  type: "ELU"
+  bottom: "conv41"
+  top: "conv41"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu41_a"
 }
-
 layer {
   name: "conv42"
   type: "Convolution"
@@ -383,11 +348,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 1024 #256
-    kernel_size: 3
-    stride: 1
+    num_output: 1024
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -397,19 +362,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu42"
-  type:"ELU"
-  bottom:"conv42"
-  top:"conv42"
+layer {
+  name: "relu42"
+  type: "ELU"
+  bottom: "conv42"
+  top: "conv42"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu42_a"
 }
-
 layer {
   name: "pool4"
   type: "Pooling"
@@ -421,7 +382,6 @@ layer {
     stride: 2
   }
 }
-
 layer {
   name: "conv51"
   type: "Convolution"
@@ -436,11 +396,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 640 #160
-    kernel_size: 3
-    stride: 1
+    num_output: 640
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -450,19 +410,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu51"
-  type:"ELU"
-  bottom:"conv51"
-  top:"conv51"
+layer {
+  name: "relu51"
+  type: "ELU"
+  bottom: "conv51"
+  top: "conv51"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu51_a"
 }
-
 layer {
   name: "conv52"
   type: "Convolution"
@@ -477,11 +433,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 1280 #320
-    kernel_size: 3
-    stride: 1
+    num_output: 1280
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -491,7 +447,6 @@ layer {
     }
   }
 }
-
 layer {
   name: "pool5"
   type: "Convolution"
@@ -504,11 +459,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 1280 #320
-    kernel_size: 7
-    stride: 1
+    num_output: 1280
     pad: 0
+    kernel_size: 7
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
