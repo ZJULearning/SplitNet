@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-TOOLS=/path/to/caffe/build/tools
+TOOLS=../caffe-1.0/build/tools
 
 if [ $# -lt 3 ]
 then
