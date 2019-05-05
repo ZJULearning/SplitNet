@@ -1,5 +1,5 @@
 # SplitNet
-This is the repository for [SplitNet](http://) paper.
+This is the repository for [SplitNet](https://www.sciencedirect.com/science/article/pii/S0925231218307665) paper.
 
 ## Prerequisites
 0. [Caffe](http://caffe.berkeleyvision.org/installation.html#prequequisites)
