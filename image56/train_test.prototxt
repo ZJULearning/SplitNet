@@ -1,48 +1,50 @@
 name: "image50"
-
 layer {
   name: "data"
   type: "Data"
   top: "data"
   top: "label"
+  include {
+    phase: TRAIN
+  }
   transform_param {
     scale: 0.00390625
-    crop_size: 100
     mirror: true
+    crop_size: 100
   }
   data_param {
     source: "/path/to/your/traininglmdb"
-    backend: LMDB
     batch_size: 128
+    backend: LMDB
   }
-  include: { phase: TRAIN }
 }
 layer {
   name: "data"
   type: "Data"
   top: "data"
   top: "label"
+  include {
+    phase: TEST
+  }
   transform_param {
     scale: 0.00390625
     crop_size: 100
   }
   data_param {
     source: "/path/to/your/testinglmdb"
-    backend: LMDB
     batch_size: 32
+    backend: LMDB
   }
-  include: { phase: TEST }
 }
-
 layer {
-  name: "crop"
-  type: "Crop"
+  name: "cornercrop"
+  type: "CornerCrop"
   bottom: "data"
   top: "upperleft"
   top: "upperright"
   top: "lowerleft"
   top: "lowerright"
-  crop_param {
+  corner_crop_param {
     crop_size: 56
     position: "upperleft"
     position: "upperright"
@@ -50,7 +52,6 @@ layer {
     position: "lowerright"
   }
 }
-
 layer {
   name: "concat"
   type: "Concat"
@@ -63,7 +64,6 @@ layer {
     axis: 1
   }
 }
-
 layer {
   name: "conv11"
   type: "Convolution"
@@ -78,11 +78,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 128 #32
-    kernel_size: 3
-    stride: 1
+    num_output: 128
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -92,19 +92,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu11"
-  type:"ELU"
-  bottom:"conv11"
-  top:"conv11"
+layer {
+  name: "relu11"
+  type: "ELU"
+  bottom: "conv11"
+  top: "conv11"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu11_a"
 }
-
 layer {
   name: "conv12"
   type: "Convolution"
@@ -119,11 +115,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 256 #64
-    kernel_size: 3
-    stride: 1
+    num_output: 256
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -133,19 +129,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu12"
-  type:"ELU"
-  bottom:"conv12"
-  top:"conv12"
+layer {
+  name: "relu12"
+  type: "ELU"
+  bottom: "conv12"
+  top: "conv12"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu12_a"
 }
-
 layer {
   name: "pool1"
   type: "Pooling"
@@ -157,7 +149,6 @@ layer {
     stride: 2
   }
 }
-
 layer {
   name: "conv21"
   type: "Convolution"
@@ -172,11 +163,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 256 #64
-    kernel_size: 3
-    stride: 1
+    num_output: 256
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -186,19 +177,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu21"
-  type:"ELU"
-  bottom:"conv21"
-  top:"conv21"
+layer {
+  name: "relu21"
+  type: "ELU"
+  bottom: "conv21"
+  top: "conv21"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu21_a"
 }
-
 layer {
   name: "conv22"
   type: "Convolution"
@@ -213,11 +200,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 512 #128
-    kernel_size: 3
-    stride: 1
+    num_output: 512
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -227,19 +214,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu22"
-  type:"ELU"
-  bottom:"conv22"
-  top:"conv22"
+layer {
+  name: "relu22"
+  type: "ELU"
+  bottom: "conv22"
+  top: "conv22"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu22_a"
 }
-
 layer {
   name: "pool2"
   type: "Pooling"
@@ -251,7 +234,6 @@ layer {
     stride: 2
   }
 }
-
 layer {
   name: "conv31"
   type: "Convolution"
@@ -266,11 +248,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 384 #96
-    kernel_size: 3
-    stride: 1
+    num_output: 384
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -280,19 +262,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu31"
-  type:"ELU"
-  bottom:"conv31"
-  top:"conv31"
+layer {
+  name: "relu31"
+  type: "ELU"
+  bottom: "conv31"
+  top: "conv31"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu31_a"
 }
-
 layer {
   name: "conv32"
   type: "Convolution"
@@ -307,11 +285,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 768 #192
-    kernel_size: 3
-    stride: 1
+    num_output: 768
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -321,19 +299,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu32"
-  type:"ELU"
-  bottom:"conv32"
-  top:"conv32"
+layer {
+  name: "relu32"
+  type: "ELU"
+  bottom: "conv32"
+  top: "conv32"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu32_a"
 }
-
 layer {
   name: "pool3"
   type: "Pooling"
@@ -345,7 +319,6 @@ layer {
     stride: 2
   }
 }
-
 layer {
   name: "conv41"
   type: "Convolution"
@@ -360,11 +333,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 512 #128
-    kernel_size: 3
-    stride: 1
+    num_output: 512
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -374,19 +347,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu41"
-  type:"ELU"
-  bottom:"conv41"
-  top:"conv41"
+layer {
+  name: "relu41"
+  type: "ELU"
+  bottom: "conv41"
+  top: "conv41"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu41_a"
 }
-
 layer {
   name: "conv42"
   type: "Convolution"
@@ -401,11 +370,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 1024 #256
-    kernel_size: 3
-    stride: 1
+    num_output: 1024
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -415,19 +384,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu42"
-  type:"ELU"
-  bottom:"conv42"
-  top:"conv42"
+layer {
+  name: "relu42"
+  type: "ELU"
+  bottom: "conv42"
+  top: "conv42"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu42_a"
 }
-
 layer {
   name: "pool4"
   type: "Pooling"
@@ -439,7 +404,6 @@ layer {
     stride: 2
   }
 }
-
 layer {
   name: "conv51"
   type: "Convolution"
@@ -454,11 +418,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 640 #160
-    kernel_size: 3
-    stride: 1
+    num_output: 640
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -468,19 +432,15 @@ layer {
     }
   }
 }
-
-layer{
-  name:"relu51"
-  type:"ELU"
-  bottom:"conv51"
-  top:"conv51"
+layer {
+  name: "relu51"
+  type: "ELU"
+  bottom: "conv51"
+  top: "conv51"
   elu_param {
-    alpha: 1.0
+    alpha: 1
   }
-  #weight_decay: 0
-  #param:"relu51_a"
 }
-
 layer {
   name: "conv52"
   type: "Convolution"
@@ -495,11 +455,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 1280 #320
-    kernel_size: 3
-    stride: 1
+    num_output: 1280
     pad: 1
+    kernel_size: 3
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -509,7 +469,6 @@ layer {
     }
   }
 }
-
 layer {
   name: "pool5"
   type: "Convolution"
@@ -522,11 +481,11 @@ layer {
     lr_mult: 2
   }
   convolution_param {
-    num_output: 1280 #320
-    kernel_size: 8
-    stride: 1
+    num_output: 1280
     pad: 0
+    kernel_size: 8
     group: 4
+    stride: 1
     weight_filler {
       type: "msra"
       variance_norm: AVERAGE
@@ -536,7 +495,6 @@ layer {
     }
   }
 }
-
 layer {
   name: "drop"
   type: "Dropout"
@@ -546,7 +504,6 @@ layer {
     dropout_ratio: 0.4
   }
 }
-
 layer {
   name: "slice_drop"
   type: "Slice"
@@ -559,8 +516,6 @@ layer {
     slice_dim: 1
   }
 }
-
-# loss11
 layer {
   name: "fc11"
   type: "InnerProduct"
@@ -583,26 +538,21 @@ layer {
     }
   }
 }
-
 layer {
   name: "loss11"
   type: "SoftmaxWithLoss"
   bottom: "fc11"
   bottom: "label"
   top: "loss11"
-  loss_weight:1
+  loss_weight: 1
 }
-
 layer {
   name: "accuracy11"
   type: "Accuracy"
   bottom: "fc11"
   bottom: "label"
   top: "accuracy11"
-  #include: { phase: TEST }
 }
-
-# loss12
 layer {
   name: "fc12"
   type: "InnerProduct"
@@ -625,26 +575,21 @@ layer {
     }
   }
 }
-
 layer {
   name: "loss12"
   type: "SoftmaxWithLoss"
   bottom: "fc12"
   bottom: "label"
   top: "loss12"
-  loss_weight:1
+  loss_weight: 1
 }
-
 layer {
   name: "accuracy12"
   type: "Accuracy"
   bottom: "fc12"
   bottom: "label"
   top: "accuracy12"
-  #include: { phase: TEST }
 }
-
-# loss21
 layer {
   name: "fc21"
   type: "InnerProduct"
@@ -667,26 +612,21 @@ layer {
     }
   }
 }
-
 layer {
   name: "loss21"
   type: "SoftmaxWithLoss"
   bottom: "fc21"
   bottom: "label"
   top: "loss21"
-  loss_weight:1
+  loss_weight: 1
 }
-
 layer {
   name: "accuracy21"
   type: "Accuracy"
   bottom: "fc21"
   bottom: "label"
   top: "accuracy21"
-  #include: { phase: TEST }
 }
-
-# loss22
 layer {
   name: "fc22"
   type: "InnerProduct"
@@ -709,21 +649,18 @@ layer {
     }
   }
 }
-
 layer {
   name: "loss22"
   type: "SoftmaxWithLoss"
   bottom: "fc22"
   bottom: "label"
   top: "loss22"
-  loss_weight:1
+  loss_weight: 1
 }
-
 layer {
   name: "accuracy22"
   type: "Accuracy"
   bottom: "fc22"
   bottom: "label"
   top: "accuracy22"
-  #include: { phase: TEST }
 }
