@@ -26,10 +26,10 @@ There are 5 file in each setting dir:
 
 You can train by simply running
     
-    $ cd basic ( or basic2x or image50 or image56 or SplitNet-conv22 or SplitNet-conv52)
+    $ cd basic (or basic2x or image50 or image56 or SplitNet-conv22 or SplitNet-conv52)
     $ ./train.sh
 
 Once the training is completed, you can generate features by simply running
 
-    $ cd basic ( or basic2x or image50 or image56 or SplitNet-conv22 or SplitNet-conv52)
+    $ cd basic (or basic2x or image50 or image56 or SplitNet-conv22 or SplitNet-conv52)
     $ ./extract.sh
